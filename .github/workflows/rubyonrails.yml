@@ -17,14 +17,14 @@ jobs:
       postgres:
         image: postgres:11-alpine
         ports:
-          - "5432:5432"
+          - "23703"
         env:
-          POSTGRES_DB: Spacer_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
+          POSTGRES_DB: defaultdb_test
+          POSTGRES_USER: avnadmin
+          POSTGRES_PASSWORD: AVNS_03dFsSPWz44wzMUkgIe
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/Spacer_test"
+      DATABASE_URL: "postgres://avnadmin:AVNS_03dFsSPWz44wzMUkgIe@spacer-postgres-spacer.aivencloud.com:23703/defaultdb_test"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
