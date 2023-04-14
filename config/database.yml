@@ -21,12 +21,14 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: spacer-postgres-spacer.aivencloud.com
-    username: <%= ENV['avnadmin'] %>
-    password: <%= ENV['AVNS_03dFsSPWz44wzMUkgIe'] %>
+  url: postgres://avnadmin:AVNS_03dFsSPWz44wzMUkgIe@spacer-postgres-spacer.aivencloud.com:23703/defaultdb?sslmode=require
+  port: 23703
+  username: <%= ENV['avnadmin'] %>
+  password: <%= ENV['AVNS_03dFsSPWz44wzMUkgIe'] %>
 
 development:
   <<: *default
-  database: defaultdb_development
+  database: development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -60,7 +62,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: defaultdb_test
+  database: test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -84,6 +86,6 @@ test:
 #
 production:
   <<: *default
-  database: defaultdb_production
+  database: production
   username: avnadmin
   password: <%= ENV["AVNS_03dFsSPWz44wzMUkgIe"] %>
