@@ -20,12 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: Spacer/spacer-client
+        working-directory: spacer-client
 
 
       - name: Run tests
         run: npm test
-        working-directory: Spacer/spacer-client
+        working-directory: spacer-client
 
 
       - name: Deploy to Vercel
