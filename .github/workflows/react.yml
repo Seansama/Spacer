@@ -20,12 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: spacer-client
-
+        
 
       - name: Run tests
         run: npm test
-        working-directory: spacer-client
+      
 
 
       - name: Deploy to Vercel
@@ -33,5 +32,3 @@ jobs:
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          prod: true
-          working-directory: Spacer/spacer-client
