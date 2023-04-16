@@ -19,10 +19,12 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
+        working-directory: ./spacer-client
         run: npm install
         
 
       - name: Run tests
+        working-directory: ./spacer-client
         run: npm test
       
 
