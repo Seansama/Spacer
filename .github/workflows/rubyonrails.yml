@@ -24,30 +24,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7.4'
-      - name: Set up PostgreSQL
-        uses: docker-compose@v2
-        with:
-          compose-file: docker-compose.ci.yml
-          service-name: db
-          run: |
-            psql -h localhost -U postgres -c 'CREATE DATABASE Spacer_test;'
-            psql -h localhost -U postgres -c "CREATE USER seansama WITH PASSWORD '$Lara$00$sM';"
-            psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE Spacer_test TO seansama;"
-      - name: Set up environment variables
-        env:
-          DATABASE_NAME: Spacer_test
-          DATABASE_USERNAME: seansama
-          DATABASE_PASSWORD: $Lara$00$sM
-          DATABASE_HOST: localhost
-        run: |
-          echo "export DATABASE_NAME=${{ env.DATABASE_NAME }}" >> $GITHUB_ENV
-          echo "export DATABASE_USERNAME=${{ env.DATABASE_USERNAME }}" >> $GITHUB_ENV
-          echo "export DATABASE_PASSWORD=${{ env.DATABASE_PASSWORD }}" >> $GITHUB_ENV
-          echo "export DATABASE_HOST=${{ env.DATABASE_HOST }}" >> $GITHUB_ENV
       - run: bundle install
-      - env:
-          DATABASE_URL: postgres://${{ env.DATABASE_USERNAME }}:${{ env.DATABASE_PASSWORD }}@${{ env.DATABASE_HOST }}/${{ env.DATABASE_NAME }}
-        run: bundle exec rails db:migrate RAILS_ENV=test
-      - env:
-          DATABASE_URL: postgres://${{ env.DATABASE_USERNAME }}:${{ env.DATABASE_PASSWORD }}@${{ env.DATABASE_HOST }}/${{ env.DATABASE_NAME }}
-        run: bundle exec rspec spec
+      - run: bundle exec rails db:migrate RAILS_ENV=test
+      - run: bundle exec rspec spec
