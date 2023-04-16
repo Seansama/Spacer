@@ -4,16 +4,22 @@
 #
 # This workflow will install a prebuilt Ruby version, install dependencies, and
 # run tests and linters.
-name: "Ruby on Rails CI"
+name: Rails Tests
+
 on:
-  workflow_dispatch:
   push:
-    branches: [ "main", "develop" ]
+    branches:
+      - main
+      - development
   pull_request:
-    branches: [ "main", "develop" ]
+    branches:
+      - main
+      - development
+
 jobs:
-  rspec:
+  test:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:14
@@ -22,14 +28,15 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: Spacer_test
+          POSTGRES_DB: api_test
         # needed because the postgres container does not provide a healthcheck
         options:
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-          steps:
+
+    steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
@@ -38,27 +45,26 @@ jobs:
         run: |
           sudo apt-get -y install libpq-dev
       - name: Install dependencies
+        working-directory: ./api
         run: |
           gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
       - name: Set up database
+        working-directory: ./api
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost/Spacer_test
+          DATABASE_URL: postgres://postgres:postgres@localhost/api_test
           PGSSLMODE: disable
         run: |
           bin/rails db:create
           bin/rails db:migrate
       - name: Run tests
+        working-directory: ./api
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/Spacer_test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/api_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           PGSSLMODE: disable
         run: bundle exec rspec
-
-          
-
-   
