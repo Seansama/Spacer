@@ -83,4 +83,8 @@ test:
 #
 production:
   <<: *default
-  database: Spacer_production
+  host: spacer-postgres-spacer.aivencloud.com
+  port: 23703
+  username: 'avnadmin'
+  password: 'AVNS_03dFsSPWz44wzMUkgIe'
+  database: defaultdb
