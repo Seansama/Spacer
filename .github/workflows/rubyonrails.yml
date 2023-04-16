@@ -19,6 +19,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0.2'
-      - run: cd server && bundle install
-      - run: cd server && bundle exec rails db:migrate RAILS_ENV=test
-      - run: cd server && bundle exec rspec spec
+      - run: bundle install
+      - run: bundle exec rails db:migrate RAILS_ENV=test
+      - run: bundle exec rspec spec
