@@ -19,10 +19,12 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
+        working-directory: ./spacer-client
         run: npm install
         
 
       - name: Run tests
+        working-directory: ./spacer-client
         run: npm test
       
 
@@ -32,3 +34,5 @@ jobs:
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          working-directory: Spacer/spacer-client
