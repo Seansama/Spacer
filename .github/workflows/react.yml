@@ -34,10 +34,10 @@ jobs:
       
 
 
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
-        with:
-          working-directory: Spacer/spacer-client
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #- name: Deploy to Vercel
+       # uses: amondnet/vercel-action@v20
+        #with:
+          #working-directory: Spacer/spacer-client
+          #vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          #vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+         # vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
