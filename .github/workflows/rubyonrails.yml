@@ -28,7 +28,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: api_test
+          POSTGRES_DB: Spacer_test
         # needed because the postgres container does not provide a healthcheck
         options:
           --health-cmd pg_isready
@@ -45,25 +45,22 @@ jobs:
         run: |
           sudo apt-get -y install libpq-dev
       - name: Install dependencies
-        working-directory: ./api
         run: |
           gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
       - name: Set up database
-        working-directory: ./api
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost/api_test
+          DATABASE_URL: postgres://postgres:postgres@localhost/Spacer_test
           PGSSLMODE: disable
         run: |
           bin/rails db:create
           bin/rails db:migrate
       - name: Run tests
-        working-directory: ./api
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/api_test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/Spacer_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           PGSSLMODE: disable
