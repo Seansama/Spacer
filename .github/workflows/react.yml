@@ -21,6 +21,10 @@ jobs:
       - name: Install dependencies
         working-directory: ./spacer-client
         run: npm install
+
+      - name: Install npx
+        working-directory: ./spacer-client
+        run: npm install npx
         
 
       - name: Run tests
