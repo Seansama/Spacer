@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./spacer-client
-        run: npm install
+        run: npm install --build-from-resource
         
 
       - name: Run tests
