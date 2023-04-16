@@ -14,16 +14,51 @@ on:
 jobs:
   rspec:
     runs-on: ubuntu-latest
-    
-    steps:
+    services:
+      postgres:
+        image: postgres:14
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: Spacer_test
+        # needed because the postgres container does not provide a healthcheck
+        options:
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          steps:
       - uses: actions/checkout@v3
-      - name: Install PostgreSQL
-        run: |
-          sudo apt-get update
-          sudo apt-get install postgresql postgresql-contrib libpq-dev -y
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7.4'
-      - run: bundle install
-      - run: bundle exec rails db:migrate RAILS_ENV=test
-      - run: bundle exec rspec spec
+      - name: Install required apt packages
+        run: |
+          sudo apt-get -y install libpq-dev
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
+      - name: Set up database
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost/Spacer_test
+          PGSSLMODE: disable
+        run: |
+          bin/rails db:create
+          bin/rails db:migrate
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/Spacer_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          PGSSLMODE: disable
+        run: bundle exec rspec
+
+          
+
+   
