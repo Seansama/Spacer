@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_083823) do
     t.datetime "updated_at", null: false
   end
 
+
   create_table "spaces", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
