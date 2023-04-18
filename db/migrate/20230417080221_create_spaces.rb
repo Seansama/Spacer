@@ -4,9 +4,10 @@ class CreateSpaces < ActiveRecord::Migration[7.0]
       t.string :name, null: false
       t.text :description, null: false
       t.string :location, null: false
+      t.string :image_url
       t.decimal :hourly_rate, precision: 10, scale: 2, null: false
       t.decimal :daily_rate, precision: 10, scale: 2, null: false
-      t.jsonb :available_dates, null: false, default: {}
+      t.datetime :available_dates
 
       t.timestamps
     end
