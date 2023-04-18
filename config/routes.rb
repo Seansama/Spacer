@@ -3,5 +3,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :bookings, only: [:index, :show, :destroy, :edit, :update, :create, :new ] 
+  # resources :bookings, only: [:index, :show, :destroy, :edit, :update, :create, :new ] 
+  # get '/bookings', to: 'bookings#index'
+  # get '/bookings/:id', to: 'bookings#show'
+  # post '/bookings', to: 'bookings#create'
+  # patch '/powers/:id', to: 'bookings#update'
+  # delete '/bookings/:id', to: 'bookings#destroy'
+
+
 end
