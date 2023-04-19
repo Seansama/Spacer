@@ -34,6 +34,16 @@ class AdminController < ApplicationController
     end
   end
 
+  def admin_login
+    user = User.find_by(email:params[:email])
+    if user && user.authenticate(params[:password])
+      token = encode_token({id: user.id})
+      render json: { user: user, token: token }, status: :ok
+    else
+      render json: { error: 'Invalid email or password'}, status: :unprocessable_entity
+    end
+  end
+
   private
   def admin_params
     params.require(:admin).permit(:name, :email, :password)
