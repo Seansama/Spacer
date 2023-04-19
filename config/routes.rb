@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :users
-  resources :bookings, only: [:index, :show, :destroy, :edit, :update, :create, :new ] 
-
+  resources :bookings, only: [:index, :show, :destroy, :edit, :update, :create, :new ]
+  resources :admin, only: [:show, :create, :update, :destroy]
 end
