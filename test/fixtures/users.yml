@@ -4,8 +4,11 @@ one:
   username: MyString
   role: MyString
   email: MyString
+  password_digest: MyString
+
 
 two:
   username: MyString
   role: MyString
   email: MyString
+  password_digest: MyString
