@@ -1,27 +1,49 @@
 class ApplicationController < ActionController::API
-    include ActionController::Cookies
-    # before_action :authenticate_user!
-    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-    # rescue_from Pundit::NotAuthorizedError, with: :render_forbidden_response
-    def authenticate_user!
-      return if current_user.present?
-      render json: { errors: ['You need to sign in or sign up before continuing.'] }, status: :unauthorized
+  include ActionController::Cookies
+    rescue_from StandardError, with: :standard_error
+    def app_response(message: 'success', status: 200, data: nil)
+        render json: {
+            message: message,
+            data: data
+        }, status: status
     end
-    def current_user
-      current_user ||= User.find_by(id: session[:user_id])
+    def encode(uid, email)
+        payload = {
+            data: {
+                uid: uid,
+                email: email,
+                role: 'admin'
+            },
+            exp: Time.now.to_i + (6 * 3600)
+        }
+        JWT.encode(payload, ENV['task_train_key'], 'HS256')
     end
-    def current_booking
-      current_booking ||= Booking.find(params[:booking_id])
+    def decode(token)
+        JWT.decode(token, ENV['task_train_key'], true, { algorithm: 'HS256' })
     end
-    private
-    def render_not_found_response(exception)
-      render json: { error: exception.message }, status: :not_found
+    def verify_auth
+        auth_headers = request.headers['Authorization']
+        if !auth_headers
+            app_response(message: 'failed', status: 401, data: { info: 'Your request is not authorized.' })
+        else
+            token = auth_headers.split(' ')[1]
+            save_user_id(token)
+        end
     end
-    def render_unprocessable_entity_response(exception)
-      render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
+    def save_user(id)
+        session[:uid] = id
+        session[:expiry] = 6.hours.from_now
     end
-    def render_forbidden_response(exception)
-      render json: { error: exception.message }, status: :forbidden
-    end    
+    def remove_user
+        session.delete(:uid)
+        session[:expiry] = Time.now
+    end
+    def session_expired?
+        session[:expiry] ||= Time.now
+        time_diff = (Time.parse(session[:expiry]) - Time.now).to_i
+        unless time_diff > 0
+            app_response(message: 'failed', status: 401, data: { info: 'Your session has expired. Please login again to continue' })
+        end
+      end
 end
+

@@ -10,11 +10,13 @@ Rails.application.routes.draw do
   patch '/powers/:id', to: 'bookings#update'
   delete '/bookings/:id', to: 'bookings#destroy'
 
-   resources :users
+  #  resources :users
 
-    post "/signup", to: 'users#create'
-    post '/login', to: 'sessions#create'
-    delete '/logout', to: 'sessions#destroy'
-
-
+    # post "/signup", to: 'users#create'
+    # post '/login', to: 'sessions#create'
+    # delete '/logout', to: 'sessions#destroy'
+    # post '/auth/login', to: 'authentication#login'
+    post '/users', to: 'users#register'
+  post '/login', to: 'users#login'
+  delete '/logout', to: 'users#logout'
 end

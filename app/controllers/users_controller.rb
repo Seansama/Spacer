@@ -1,39 +1,36 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user, only: [:show, :update, :destroy]
+  before_action :session_expired?, only: [:check_login_status]
+  def register
+      user = User.create(user_params)
+      if user.valid?
+          save_user(user.id)
+          app_response(message: 'Registration was successful', status: :created, data: user)
+      else
+          app_response(message: 'Something went wrong during registration', status: :unprocessable_entity, data: user.errors)
+      end
+  end
+  def login
+      sql = "username = :username OR email = :email"
+      user = User.where(sql, { username: user_params[:username], email: user_params[:email] }).first
+      if user&.authenticate(user_params[:password])
+          save_user(user.id)
+          token = encode(user.id, user.email)
+          app_response(message: 'Login was successful', status: :ok, data: {user: user, token: token})
+      else
+          app_response(message: 'Invalid username/email or password', status: :unauthorized)
+      end
+  end
+  def logout
+      remove_user
+      app_response(message: 'Logout successful')
+  end
 
-    def index
-      users = User.all
-      render json: users
-    end
-    def create
-        user = User.create(user_params)
-        if user.valid?
-          session[:user_id] = user.id
-          render json: user, status: :created
-        else
-          render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
-        end
-    end
-    def show
-      render json: current_user
-    end
-    def update
-      if current_user.update(user_params)
-        render json: { status: 'SUCCESS', message: 'User updated successfully', data: @current_user }
-      else
-        render json: { status: 'ERROR', message: 'Failed to update user', data: @current_user.errors }
-    end
-    end
-    def destroy
-      if current_user.destroy
-        render json: { status: 'SUCCESS', message: 'User deleted successfully', data: @current_user }
-      else
-        render json: { status: 'ERROR', message: 'Failed to delete user', data: @current_user.errors }
-    end
-    end
     private
     def user_params
-        params.permit(:username, :email, :password, :role)
+      params.permit(:username, :email, :password)
     end
-end
+
+    
+
+  end
   

@@ -25,6 +25,7 @@ gem "rack-cors"
 gem "rspec"
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.18'
+gem 'jwt'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
