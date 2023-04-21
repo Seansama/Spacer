@@ -10,6 +10,7 @@ class SpacesController < ApplicationController
     render json: @space
   end
 
+  before_action :authorize
   def create
     @space = Space.new(space_params)
 
