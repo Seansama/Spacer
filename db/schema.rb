@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_17_152718) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_132404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_152718) do
     t.integer "user_id"
     t.integer "space_id"
     t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "jwt_admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -55,6 +60,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_152718) do
     t.datetime "available_dates"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "admin_id"
+    t.index ["admin_id"], name: "index_spaces_on_admin_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -69,4 +76,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_152718) do
   add_foreign_key "payments", "bookings"
   add_foreign_key "payments", "spaces"
   add_foreign_key "payments", "users"
+  add_foreign_key "spaces", "admins"
 end
