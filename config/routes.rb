@@ -8,9 +8,9 @@ Rails.application.routes.draw do
     post '/bookings', to: 'bookings#create'
     patch '/powers/:id', to: 'bookings#update'
     delete '/bookings/:id', to: 'bookings#destroy'
-    
+
     post '/users', to: 'users#register'
     post '/login', to: 'users#login'
-    delete '/logout', to: 'users#logout
+    delete '/logout', to: 'users#logout'
 end
-end
+
