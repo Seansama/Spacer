@@ -10,6 +10,7 @@ class SpacesController < ApplicationController
     render json: @space
   end
 
+  before_action :authorize
   def create
     @space = Space.new(space_params)
 
@@ -39,7 +40,11 @@ class SpacesController < ApplicationController
   end
 
   def space_params
+<<<<<<< HEAD
     params.require(:space).permit(:name, :description, :location, :hourly_rate, :daily_rate, available_dates:, [])
+=======
+    params.require(:space).permit(:name, :description, :location, :hourly_rate, :daily_rate, :available_dates)
+>>>>>>> 76814893e2804b0b04b820aeb00e516a08db8c3a
   end
 end
 

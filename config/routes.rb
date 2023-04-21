@@ -9,8 +9,19 @@ Rails.application.routes.draw do
     patch '/powers/:id', to: 'bookings#update'
     delete '/bookings/:id', to: 'bookings#destroy'
 
+
     post '/users', to: 'users#register'
     post '/login', to: 'users#login'
     delete '/logout', to: 'users#logout'
+
+  # Defines the root path route ("/")
+  # root "articles#index"
+
+  
+  resources :admin, only: [:show, :create, :update, :destroy]
+
+  #admin custom controllers
+  post '/admin_login' => 'admin#admin_login'
+
 end
 
