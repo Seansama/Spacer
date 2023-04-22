@@ -9,9 +9,15 @@ Rails.application.routes.draw do
 
   resources :users
   resources :bookings, only: [:index, :show, :destroy, :edit, :update, :create, :new ]
-  resources :admin, only: [:show, :create, :update, :destroy]
+  #resources :admin, only: [:show, :create, :update, :destroy]
 
   #admin custom controllers
   post '/admin_login' => 'admin#admin_login'
+    resources :admin, only: [:show, :create, :update, :destroy]  do
+      resources :spaces, only: [:show, :update, :destroy]
+    end
+
+
+
 end
 
