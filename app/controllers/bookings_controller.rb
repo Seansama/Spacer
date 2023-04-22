@@ -32,13 +32,15 @@ class BookingsController < ApplicationController
     end
   
     def destroy
-        booking = Booking.find_by(id: params[:id])
+      booking = Booking.find_by(id: params[:id])
+      if booking
         booking.destroy
         head :no_content
       else
         render json: { error: "Booking not found" }, status: :not_found
       end
     end
+    
   
     private
   
