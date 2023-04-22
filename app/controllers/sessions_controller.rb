@@ -28,8 +28,4 @@ class SessionsController < ActionController::API
       nil
     end
   end
-
-
-
-
 end

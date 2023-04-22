@@ -20,20 +20,14 @@ class AdminController < ApplicationController
       else
         render json: {error: admin.errors.full_messages}, status: :unprocessable_entity
       end
-    end
-  end
-
-
-  def destroy
-    admin = Admin.find_by(id: params[:id])
-    if admin.destroy
-      head :no_content
-    else
-      render json: {error: 'This user could not be deleted. Perhaps check if they exist?'}, status: :not_found
-    end
   end
 
   private
+
   def admin_params
-    params.require(:admin).permit(:name, :email, :password)
+    params.permit(:name, :email, :password)
   end
+
+  end
+
+

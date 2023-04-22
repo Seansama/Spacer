@@ -1,6 +1,6 @@
 class SpacesController < ApplicationController
   before_action :authenticate_admin, only: [:show_spaces, :update_space, :delete_space, :create]
-
+  before_action :authenticate_user, only: [:index]
   #public routes
   def index
     @spaces = Space.all
@@ -106,5 +106,13 @@ class SpacesController < ApplicationController
     end
   end
 
+  def authenticate_user
+    token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
+    user = ApplicationController.retrieve_user_from_token(token)
+
+    unless user
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
+  end
 end
 

@@ -1,6 +1,6 @@
 class Space < ApplicationRecord
   belongs_to :admin
-  belongs_to :user
+  has_many :bookings, dependent: :destroy
   validates :name, presence: true
   validates :description, presence: true
   validates :location, presence: true
