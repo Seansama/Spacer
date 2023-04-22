@@ -1,16 +1,12 @@
 class SpacesController < ApplicationController
   before_action :set_space, only: [:show, :update, :destroy]
-
+  before_action :authorize_admin, only: [:show, :destroy, :update]
+  #public routes
   def index
     @spaces = Space.all
     render json: @spaces
   end
 
-  def show
-    render json: @space
-  end
-
-  before_action :authorize
   def create
     @space = Space.new(space_params)
 
@@ -31,6 +27,17 @@ class SpacesController < ApplicationController
 
   def destroy
     @space.destroy
+  end
+
+  #custom admin routes
+  def show
+    admin = authorized_admin
+    space = admin.spaces.find_by(id: params[:id])
+    if space
+      render json: space, status: :ok
+    else
+      render json: { error: 'Space not found' }, status: :not_found
+    end
   end
 
   private

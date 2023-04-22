@@ -44,6 +44,4 @@ class ApplicationController < ActionController::API
         unless time_diff > 0
             app_response(message: 'failed', status: 401, data: { info: 'Your session has expired. Please login again to continue' })
         end
-      end
 end
-

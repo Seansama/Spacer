@@ -32,8 +32,7 @@ class BookingsController < ApplicationController
     end
   
     def destroy
-      booking = Booking.find_by(id: params[:id])
-      if booking
+        booking = Booking.find_by(id: params[:id])
         booking.destroy
         head :no_content
       else
