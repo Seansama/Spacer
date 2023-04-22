@@ -44,10 +44,12 @@ class BookingsController < ApplicationController
     
 
     def destroy
-        booking = Booking.find_by(id: params[:id])
+      booking = Booking.find_by(id: params[:id])
+      if booking
         booking.destroy
         head :no_content
     end
+    
   
 
     private
