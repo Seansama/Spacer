@@ -13,9 +13,10 @@ Rails.application.routes.draw do
 
   #admin custom controllers
   post '/admin_login' => 'admin#admin_login'
-    resources :admin, only: [:show, :create, :update, :destroy]  do
-      resources :spaces, only: [:show, :update, :destroy]
-    end
+  post '/admin_register' => 'admin#create'
+  get '/show_spaces' => 'spaces#show_spaces'
+  patch '/update_space' => 'spaces#update_space'
+  delete '/delete_space' => 'spaces#delete_space'
 
 
 

@@ -1,6 +1,6 @@
 class SpacesController < ApplicationController
-  before_action :set_space, only: [:show, :update, :destroy]
-  before_action :authorize_admin, only: [:show, :destroy, :update]
+  before_action :authenticate_admin, only: [:show_spaces, :update_space, :delete_space, :create]
+
   #public routes
   def index
     @spaces = Space.all
@@ -8,37 +8,84 @@ class SpacesController < ApplicationController
   end
 
   def create
-    @space = Space.new(space_params)
+    token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
+    admin = SessionsController.retrieve_admin_from_token(token)
 
-    if @space.save
-      render json: @space, status: :created
+    if admin
+      # Create a new space associated with the admin's ID
+      space = Space.new(space_params)
+      space.admin_id = admin.id
+
+      if space.save
+        render json: { space: space }, status: :created
+      else
+        render json: { error: space.errors.full_messages }, status: :unprocessable_entity
+      end
     else
-      render json: @space.errors, status: :unprocessable_entity
+      nil
     end
   end
 
-  def update
-    if @space.update(space_params)
-      render json: @space
+
+  def update_space
+    token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
+    admin = SessionsController.retrieve_admin_from_token(token)
+    if admin
+      # Find the hotel associated with the admin's ID
+      space = Space.find_by(id: params[:id], admin_id: admin.id)
+      if space
+        # Update the hotel with the given parameters
+        if space.update(
+          description: params[:description],
+          hourly_rate: params[:hourly_rate],
+          daily_rate: params[:daily_rate]
+        )
+          render json: { space: space }, status: :ok
+        else
+          render json: { error: space.errors.full_messages }, status: :unprocessable_entity
+        end
+      else
+        render json: { error: 'Hotel not found' }, status: :not_found
+      end
     else
-      render json: @space.errors, status: :unprocessable_entity
+      nil
     end
   end
 
-  def destroy
-    @space.destroy
-  end
+  def delete_space
+    token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
+    admin = SessionsController.retrieve_admin_from_token(token)
 
-  #custom admin routes
-  def show
-    admin = authorized_admin
-    space = admin.spaces.find_by(id: params[:id])
-    if space
-      render json: space, status: :ok
+    if admin
+      # Find the hotel associated with the admin's ID
+      space = Space.find_by(id: params[:id], admin_id: admin.id)
+
+      if space
+        # Delete the hotel
+        space.destroy
+        render json: { message: 'Hotel deleted' }, status: :ok
+      else
+        render json: { error: 'Hotel not found' }, status: :not_found
+      end
     else
-      render json: { error: 'Space not found' }, status: :not_found
+      nil
     end
   end
+
+
+  def show_spaces
+    token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
+    admin = SessionsController.retrieve_admin_from_token(token)
+
+    if admin
+      # Retrieve hotels associated with the admin's ID
+      spaces = Space.where(admin_id: admin.id)
+      render json: { spaces: spaces }, status: :ok
+    else
+      nil
+    end
+  end
+
 
   private
 
@@ -49,5 +96,15 @@ class SpacesController < ApplicationController
   def space_params
     params.require(:space).permit(:name, :description, :location, :hourly_rate, :daily_rate, :available_dates)
   end
+
+  def authenticate_admin
+    token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
+    admin = SessionsController.retrieve_admin_from_token(token)
+
+    unless admin
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
+  end
+
 end
 

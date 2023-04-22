@@ -27,3 +27,11 @@ Space.create([
     available_dates: '9999-12-31 23:59:59'
   }
 ])
+
+Admin.create([
+               {
+                 "name": "John Smith",
+                 "email": "John.smith@gmail.com",
+                 "password": "myp@ssw0rd"
+               }
+             ])
