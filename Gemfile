@@ -38,7 +38,3 @@ group :development do
 
 
 end
-
-gem 'jwt'
-
-gem 'bcrypt'
