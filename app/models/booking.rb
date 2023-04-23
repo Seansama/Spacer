@@ -1,5 +1,5 @@
 class Booking < ApplicationRecord
-  belongs_to :user,  class_name: MyNamespace::User
+  belongs_to :user
    belongs_to :space
   validates :title, presence: true, length: { in: 2..50 }
   validates :body, presence: true, length: { minimum: 10 }
