@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :payments
   #admin custom controllers
   post '/admin_login' => 'admin#admin_login'
-  post '/admin_register' => 'admin#create'
+  post '/admin' => 'admin#create'
 
   #Spaces controllers
   get '/spaces' => 'spaces#index'
