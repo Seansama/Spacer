@@ -173,7 +173,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bcrypt (~> 3.1, >= 3.1.18)
+  bcrypt
   debug
   jwt
   pg (~> 1.1)
