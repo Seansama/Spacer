@@ -5,7 +5,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const onBookSpaceTodayClick = useCallback(() => {
-    navigate("/client-login");
+    navigate("/role-selector");
   }, [navigate]);
 
   return (
@@ -310,7 +310,7 @@ const Home = () => {
             }}
           >
             <p style={{ margin: "0" }}>Looking for where to host</p>
-            <p style={{ margin: "0" }}>your convention?</p>
+            <p style={{ margin: "0" }}>your concert?</p>
           </div>
           <b
             style={{

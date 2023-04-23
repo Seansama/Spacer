@@ -4,7 +4,6 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
-
 import Home from "./pages/Home";
 import ClientLogin from "./pages/ClientLogin";
 import AdminLogin from "./pages/AdminLogin";
@@ -13,6 +12,7 @@ import AdminSignup from "./pages/AdminSignup";
 import Spaces from "./pages/Spaces";
 import MySpaces from "./pages/MySpaces";
 import { useEffect } from "react";
+import RoleSelector from "./pages/RoleSelector";
 
 function App() {
   const action = useNavigationType();
@@ -83,6 +83,7 @@ function App() {
       <Route path="/admin-signup" element={<AdminSignup />} />
       <Route path="/spaces" element={<Spaces />} />
       <Route path="/my-spaces" element={<MySpaces />} />
+      <Route path="/role-selector" element={<RoleSelector />} />
     </Routes>
   );
 }
