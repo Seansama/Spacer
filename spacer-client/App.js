@@ -4,7 +4,6 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
-
 import Home from "./pages/Home";
 import ClientLogin from "./pages/ClientLogin";
 import AdminLogin from "./pages/AdminLogin";
