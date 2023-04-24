@@ -14,6 +14,8 @@ import MySpaces from "./pages/MySpaces";
 import { useEffect } from "react";
 import RoleSelector from "./pages/RoleSelector";
 import SpaceDetails from "./pages/SpaceDetails";
+import AdminDash from "./pages/AdminDash";
+import CreateSpace from "./pages/createSpace";
 
 function App() {
   const action = useNavigationType();
@@ -86,6 +88,8 @@ function App() {
       <Route path="/my-spaces" element={<MySpaces />} />
       <Route path="/role-selector" element={<RoleSelector />} />
       <Route path="/spaces/:spaceId" component={SpaceDetails} />
+      <Route path="/admin-dashboard" element={<AdminDash />} />
+      <Route path="/create-space" element={<CreateSpace />} />
     </Routes>
   );
 }

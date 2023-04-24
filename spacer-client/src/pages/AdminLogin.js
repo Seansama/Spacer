@@ -8,7 +8,7 @@ const AdminLogin = () => {
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("https://booking-app-vvj0.onrender.com/login", {
+        const response = await fetch("http://127.0.0.1:3000/admin_login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -17,14 +17,17 @@ const AdminLogin = () => {
         });
 
         if (response.ok) {
+            const adminData = await response.json();
             setLoggedIn(true);
+            localStorage.setItem('adminToken', adminData.token);
+            //console.log(localStorage)
         } else {
             alert("Invalid email or password");
         }
     };
 
     if (loggedIn) {
-        navigate('/my_spaces')
+        navigate('/admin-dashboard')
     }
     return (
         <div style={{backgroundColor: "#181b1e", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>

@@ -14,16 +14,20 @@ const SpaceCard = ({ space }) => {
 
 const SpacesView = () => {
     const [spaces, setSpaces] = useState([]);
+    const userToken = localStorage.getItem('userToken')
+
 
     useEffect(() => {
         // Fetch spaces data from API with bearer token authentication
         const fetchSpaces = async () => {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userToken}`
+                }
+            };
             try {
-                const response = await fetch('https://api.example.com/spaces', {
-                    headers: {
-                        "Authorization": `Bearer {token}`
-                    },
-                });
+                const response = await fetch(' http://127.0.0.1:3000/spaces', config);
 
                 if (response.ok) {
                     const data = await response.json();
@@ -40,16 +44,18 @@ const SpacesView = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Spaces</h1>
-            <div className="space-card-container">
-                {spaces.map(space => (
-                    <Link to={`/spaces/${space.id}`} key={space.id}>
-                        <SpaceCard space={space} />
-                    </Link>
-                ))}
+        <body style={{backgroundColor: "#181b1e"}}>
+            <div>
+                <h1>Spaces</h1>
+                <div className="space-card-container">
+                    {spaces && spaces.map(space => (
+                        <Link to={`/spaces/${space.id}/booking/`} key={space.id}>
+                            <SpaceCard space={space} />
+                        </Link>
+                    ))}
+                </div>
             </div>
-        </div>
+        </body>
     );
 };
 
