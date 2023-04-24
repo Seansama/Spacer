@@ -15,7 +15,7 @@ class AdminController < ApplicationController
 
   def create
       admin = Admin.create(admin_params)
-      if admin.save!
+      if admin.valid?
         render json: admin, status: :created
       else
         render json: {error: admin.errors.full_messages}, status: :unprocessable_entity
@@ -25,7 +25,7 @@ class AdminController < ApplicationController
   private
 
   def admin_params
-    params.permit(:name, :email, :password)
+    params.permit(:username, :email, :password)
   end
 
   end
