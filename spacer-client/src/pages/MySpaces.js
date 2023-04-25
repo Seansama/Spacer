@@ -1,8 +1,18 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import Navbar from "../components/Navbar";
 
 const MySpaces = () => {
     const [spaces, setSpaces] = useState([]);
     const adminToken = localStorage.getItem('adminToken')
+    const title = 'Spacer';
+    const link1 = '/';
+    const link2 = '/role-selector'
+    const link3 = '/create-space';
+    const link4 = '/my-spaces';
+    const label1 = 'Home';
+    const label2 = 'Change Role'
+    const label3 = 'Create Space';
+    const label4 = 'My Spaces';
     useEffect(() => {
         const fetchData = async () => {
             const headers = {
@@ -61,9 +71,21 @@ const MySpaces = () => {
 
     return (
         <>
+            <Navbar
+                title={title}
+                link1={link1}
+                label1={label1}
+                link2={link2}
+                label2={label2}
+                link3={link3}
+                label3={label3}
+                link4={link4}
+                label4={label4}
+            />
+            <br/>
             <h1 style={{color: "#75A2A5"}}>My spaces</h1>
             <div style={{
-                backgroundColor: "#181b1e",
+                backgroundColor: "white",
                 borderRadius: "10px",
                 padding: "20px",
                 boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
@@ -86,6 +108,7 @@ const MySpaces = () => {
                              style={{
                                  maxWidth: "100%",
                                  maxHeight: "200px",
+                                 borderRadius: "15px"
                              }}
                         />
                         <h2 style={{color: "black"}}>{space.name}</h2>
@@ -93,8 +116,8 @@ const MySpaces = () => {
                         <p style={{color: "black"}}>{space.location}</p>
                         <h3 style={{color: "black"}}>{space.daily_rate}</h3>
                         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <button style={{ backgroundColor: "#75A2A5", color: "black", padding: "10px", borderRadius: "12px", marginRight: "10px",}} onClick={() => handleDelete(space.id)}>Delete</button>
-                            <button style={{ backgroundColor: "#75A2A5", color: "black", padding: "10px", borderRadius: "10px" }} onClick={() => {
+                            <button style={{ backgroundColor: "#75A2A5", color: "black", padding: "10px", borderRadius: "12px", marginRight: "10px", opacity: "80%"}} onClick={() => handleDelete(space.id)}>Delete</button>
+                            <button style={{ backgroundColor: "#75A2A5", color: "black", padding: "10px", borderRadius: "10px", opacity: "80%" }} onClick={() => {
                                 const newDescription = prompt("Enter a new hotel description:");
                                 handleEdit(space.id, newDescription);
                             }}>Edit</button>

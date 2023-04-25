@@ -1,11 +1,18 @@
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const AdminSignup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setName] = useState("");
     const navigate = useNavigate();
+    const title = 'Spacer';
+    const link1 = '/'
+    const label1 = 'Home'
+    const link2 = '/role-selector'
+    const label2 = 'Change Role'
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -27,62 +34,65 @@ const AdminSignup = () => {
     };
 
     return (
-        <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", backgroundColor: "#181b1e"}}>
-            <form onSubmit={handleSubmit} style={{width: "400px", padding: "1rem", borderRadius: "0.5rem", backgroundColor: "#181b1e"}}>
-                <h2 style={{textAlign: "center", color: "#75A2A5"}}>Create an Administrator Account</h2>
-                <div style={{width: "100%"}}>
-                    <label htmlFor="name" style={{display: "block", marginBottom: "0.5rem", color: "#75A2A5"}}>Username</label>
-                    <input
-                        value={username}
-                        onChange={(e) => setName(e.target.value)}
-                        type="name"
-                        placeholder="Username"
-                        id="name"
-                        style={{width: "100%", padding: "15px", borderRadius: "10px"}}
-                    />
-                </div>
+        <>
+            <Navbar title={title} link1={link1} label1={label1} link2={link2} label2={label2}/>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", backgroundColor: "white"}}>
+                <form onSubmit={handleSubmit} style={{width: "400px", padding: "1rem", borderRadius: "0.5rem", backgroundColor: "white"}}>
+                    <h2 style={{textAlign: "center", color: "#75A2A5"}}>Create an Administrator Account</h2>
+                    <div style={{width: "100%"}}>
+                        <label htmlFor="name" style={{display: "block", marginBottom: "0.5rem", color: "#75A2A5"}}>Username</label>
+                        <input
+                            value={username}
+                            onChange={(e) => setName(e.target.value)}
+                            type="name"
+                            placeholder="Username"
+                            id="name"
+                            style={{width: "100%", padding: "15px", borderRadius: "10px"}}
+                        />
+                    </div>
 
-                <div style={{width: "100%"}}>
-                    <label htmlFor="email" style={{display: "block", marginBottom: "0.5rem", color: "#75A2A5", paddingTop: "10px"}}>Email</label>
-                    <input
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        type="email"
-                        placeholder="your.email@gmail.com"
-                        id="email"
-                        name="email"
-                        style={{width: "100%", padding: "15px", borderRadius: "10px"}}
-                    />
-                </div>
+                    <div style={{width: "100%"}}>
+                        <label htmlFor="email" style={{display: "block", marginBottom: "0.5rem", color: "#75A2A5", paddingTop: "10px"}}>Email</label>
+                        <input
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="email"
+                            placeholder="your.email@gmail.com"
+                            id="email"
+                            name="email"
+                            style={{width: "100%", padding: "15px", borderRadius: "10px"}}
+                        />
+                    </div>
 
-                <div style={{width: "100%"}}>
-                    <label htmlFor="password" style={{display: "block", marginBottom: "0.5rem", color: "#75A2A5", paddingTop: "10px"}}>Password</label>
-                    <input
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        type="password"
-                        placeholder="********"
-                        id="password"
-                        name="password"
-                        style={{width: "100%", padding: "15px", borderRadius: "10px"}}
-                    />
-                </div>
+                    <div style={{width: "100%"}}>
+                        <label htmlFor="password" style={{display: "block", marginBottom: "0.5rem", color: "#75A2A5", paddingTop: "10px"}}>Password</label>
+                        <input
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password"
+                            placeholder="********"
+                            id="password"
+                            name="password"
+                            style={{width: "100%", padding: "15px", borderRadius: "10px"}}
+                        />
+                    </div>
 
-                <button type="submit" style={{padding: "0.7rem", borderRadius: "0.8rem", backgroundColor: "#75A2A5", color: "#fff", cursor: "pointer", marginTop: "10px"}}>
-                    Sign Up
-                </button>
+                    <button type="submit" style={{padding: "0.7rem", borderRadius: "0.8rem", backgroundColor: "#75A2A5", color: "#fff", cursor: "pointer", marginTop: "10px", opacity: '80%', width: "40%"}}>
+                        Sign Up
+                    </button>
 
-                <p style={{textAlign: "center", color: "#fff"}}>
-                    Already have an existing account?{" "}
-                    <Link to="/admin-login" style={{color: "#32CD32"}}>
-                        <button style={{border: "none", backgroundColor: "transparent", cursor: "pointer", color: "#75A2A5"}}>
-                            Sign In here
-                        </button>
-                    </Link>{" "}
-                </p>
-            </form>
-        </div>
+                    <p style={{textAlign: "center", color: "black"}}>
+                        Already have an existing account?{" "}
+                        <Link to="/admin-login" style={{color: "#32CD32"}}>
+                            <button style={{border: "none", backgroundColor: "transparent", cursor: "pointer", color: "#75A2A5"}}>
+                                Sign In here
+                            </button>
+                        </Link>{" "}
+                    </p>
+                </form>
+            </div>
 
+        </>
     );
 };
 

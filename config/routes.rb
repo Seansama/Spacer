@@ -13,15 +13,16 @@ Rails.application.routes.draw do
   get '/spaces' => 'spaces#index'
   post '/spaces' => 'spaces#create'
   get '/show_spaces' => 'spaces#show_spaces'
+  get '/space/:id' => 'spaces#show'
   patch '/update_space' => 'spaces#update_space'
   delete '/delete_space' => 'spaces#delete_space'
 
   #bookings
   get '/bookings' => "bookings#index"
-  get 'spaces/:id/bookings/:id', to: 'bookings#show'
-  post 'spaces/:id/bookings', to: 'bookings#create'
-  patch 'spaces/:id/powers/:id', to: 'bookings#update'
-  delete 'spaces/:id/bookings/:id', to: 'bookings#destroy'
+  get 'spaces/:id/booking/:id', to: 'bookings#show'
+  post '/spaces/:id/bookings', to: 'bookings#create'
+  patch '/update_booking', to: 'bookings#update'
+  delete '/delete_booking', to: 'bookings#destroy'
 
 
   #users

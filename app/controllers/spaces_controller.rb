@@ -1,12 +1,17 @@
 class SpacesController < ApplicationController
   before_action :authenticate_admin, only: [:show_spaces, :update_space, :create, :delete_space]
-  before_action :authenticate_user, only: [:index]
+  before_action :authenticate_user, only: [:index, :show]
   #public routes
   def index
     spaces = Space.all
     render json: spaces, status: :ok
   end
 
+
+  def show
+    space = Space.find_by(id: params[:id])
+    render json: space, status: :ok
+  end
   def create
     token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
      admin = SessionsController.retrieve_admin_from_token(token)
@@ -53,20 +58,13 @@ class SpacesController < ApplicationController
 
 
   def show_spaces
-    begin
     token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
     admin = SessionsController.retrieve_admin_from_token(token)
-    spaces = admin.spaces.all
-    render json: spaces, status: :ok
-    if admin
-      # Retrieve hotels associated with the admin's ID
-
+    if (spaces = admin.spaces.all)
+      render json: spaces, status: :ok
     else
-      nil
-    end
-  rescue => e
-    render json: { error: e.message }, status: :unprocessable_entity
-    end
+      render json: { error: spaces.errors.message }, status: :unprocessable_entity
+      end
   end
 
 

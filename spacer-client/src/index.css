@@ -3,6 +3,20 @@
 @tailwind utilities;
 
 body {
-    background-color: #181b1e;
+    background-color: white;
+    font-family: "Helvetica Neue", Helvetica, Arial, Sans-Serif;
 }
 
+.booking-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.booking-card {
+    width: 23%; /* 4 cards per row */
+    padding: 16px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: #282c34;
+}

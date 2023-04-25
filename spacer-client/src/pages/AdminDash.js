@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import Navbar from "../components/Navbar";
 
 const CreateSpace = () => (
     <Link to="/create-space" style={cardStyle}>
@@ -15,32 +16,31 @@ const MySpaces = () => (
     </Link>
 );
 
+const title = 'Spacer';
+const link1 = '/';
+const link2 = '/role-selector'
+const link3 = '/create-space';
+const link4 = '/my-spaces';
+const label1 = 'Home';
+const label2 = 'Change Role'
+const label3 = 'Create Space';
+const label4 = 'My Spaces';
+
 const AdminDash = () => (
-    <div style={{
-        position: "relative",
-        backgroundColor: "#181b1e",
-        width: "100%",
-        height: "952px",
-        overflow: "hidden",
-        textAlign: "left",
-        fontSize: "16px",
-        color: "#fff",
-        fontFamily: "Inter",
-    }}>
-        <img
-            style={{
-                position: "absolute",
-                top: "0px",
-                left: "0px",
-                width: "607px",
-                height: "952px",
-                objectFit: "cover",
-            }}
-            alt=""
-            src="/rectangle-9@2x.png"
+    <>
+        <Navbar
+            title={title}
+            link1={link1}
+            label1={label1}
+            link2={link2}
+            label2={label2}
+            link3={link3}
+            label3={label3}
+            link4={link4}
+            label4={label4}
         />
         <div>
-            <h1>Welcome to the Dashboard</h1>
+            <h1 style={{color: '#75A2A5'}}>Welcome to the Dashboard</h1>
             <div style={containerStyle}>
                 <div style={{ ...cardStyle, marginRight: '16px' }}>
                     <CreateSpace />
@@ -50,8 +50,7 @@ const AdminDash = () => (
                 </div>
             </div>
         </div>
-        <Outlet />
-    </div>
+    </>
 );
 
 const cardStyle = {
@@ -71,7 +70,7 @@ const cardStyle = {
 
 const containerStyle = {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
 };
 
