@@ -13,7 +13,11 @@ import Spaces from "./pages/Spaces";
 import MySpaces from "./pages/MySpaces";
 import { useEffect } from "react";
 import RoleSelector from "./pages/RoleSelector";
-import SpaceDetails from "./pages/SpaceDetails";
+import BookingForm from "./pages/BookingForm";
+import AdminDash from "./pages/AdminDash";
+import CreateSpace from "./pages/createSpace";
+import Mybookings from "./pages/MySpaces";
+import MyBookings from "./pages/MyBookings";
 
 function App() {
   const action = useNavigationType();
@@ -85,7 +89,10 @@ function App() {
       <Route path="/spaces" element={<Spaces />} />
       <Route path="/my-spaces" element={<MySpaces />} />
       <Route path="/role-selector" element={<RoleSelector />} />
-      <Route path="/spaces/:spaceId" component={SpaceDetails} />
+      <Route path='/create-booking/:spaceId' element={<BookingForm />} />
+      <Route path="/admin-dashboard" element={<AdminDash />} />
+      <Route path="/create-space" element={<CreateSpace />} />
+      <Route path="/my-bookings" element={<MyBookings />} />
     </Routes>
   );
 }

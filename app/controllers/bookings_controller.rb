@@ -5,7 +5,7 @@ class BookingsController < ApplicationController
     user = ApplicationController.retrieve_user_from_token(token)
     if user
     bookings = Booking.where(user_id: user.id)
-    render json: bookings.to_json(except: [:created_at, :updated_at])
+    render json: bookings.to_json(except: [:updated_at])
   end
   end
 
@@ -26,25 +26,28 @@ class BookingsController < ApplicationController
   def create
     token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
     user = ApplicationController.retrieve_user_from_token(token)
-
     if user
-    booking = Space.bookings.new(booking_params)
-    booking.user_id = user.id
-    if booking.save
-      render json: booking, status: :created
+        booking = Booking.create(booking_params) # Updated to use space.bookings.build
+        booking.user_id = user.id
+        if booking.save
+          render json: booking, status: :created
+        else
+          render json: { errors: booking.errors.full_messages }, status: :unprocessable_entity
+        end
     else
-      render json: { errors: booking.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: 'Unauthorized' }, status: :unauthorized # Added error handling for unauthorized user
     end
   end
-  end
+
   def update
     token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
     user = ApplicationController.retrieve_user_from_token(token)
 
-    if user
-    booking = Booking.find_by(id: params[:id], space_id: Space.id, user_id: user.id)
+    booking = Booking.find_by(user_id: user.id)
     if booking
-      if booking.update(booking_params)
+      if booking.update(
+        status: params[:status]
+      )
         render json: booking
       else
         render json: { errors: booking.errors.full_messages }, status: :unprocessable_entity
@@ -53,21 +56,16 @@ class BookingsController < ApplicationController
       render json: { error: "Booking not found" }, status: :not_found
     end
   end
-  end
   def destroy
     token = request.headers['Authorization'].to_s.gsub('Bearer ', '')
     user = ApplicationController.retrieve_user_from_token(token)
-
-    if user
-    booking = Booking.find_by(id: params[:id], space_id: Space.id, user_id: user.id)
-    if booking
+    if (booking = Booking.find_by(user_id: user.id))
       booking.destroy
       head :no_content
     else
       render json: { error: "Booking not found" }, status: :not_found
     end
     end
-  end
 
     private
 
@@ -81,7 +79,7 @@ class BookingsController < ApplicationController
   end
   
     def booking_params
-      params.permit(:title, :body, :user_id, :space_id, :status)
+      params.permit(:arrival, :departure, :status, :title)
     end
   end
   
