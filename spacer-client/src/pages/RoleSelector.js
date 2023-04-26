@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import Navbar from "../components/Navbar";
 
 const AdminCard = () => (
     <Link to="/admin-login" style={cardStyle}>
@@ -14,35 +15,19 @@ const UserCard = () => (
         <p>Click here to access the user panel and view hotels.</p>
     </Link>
 );
+const title = 'Spacer';
+const link1 = '/'
+const label1 = 'Home'
 
 const HomeView = () => (
-    <div style={{
-        position: "relative",
-        backgroundColor: "#181b1e",
-        width: "100%",
-        height: "952px",
-        overflow: "hidden",
-        textAlign: "left",
-        fontSize: "16px",
-        color: "#fff",
-        fontFamily: "Inter",
-    }}>
-        <img
-            style={{
-                position: "absolute",
-                top: "0px",
-                left: "0px",
-                width: "607px",
-                height: "952px",
-                objectFit: "cover",
-            }}
-            alt=""
-            src="/rectangle-9@2x.png"
-        />
+    <>
+        <Navbar title={title} link1={link1} label1={label1}/>
         <div>
-            <h1>Welcome to the Dashboard</h1>
+            <h1 style={{color: '#75A2A5'}}>Welcome to the User Selection desk</h1>
+            <h2>Please select a role to continue: </h2>
+            <br/>
             <div style={containerStyle}>
-                <div style={{ ...cardStyle, marginRight: '16px' }}>
+                <div style={{ ...cardStyle}}>
                     <AdminCard />
                 </div>
                 <div style={cardStyle}>
@@ -50,8 +35,8 @@ const HomeView = () => (
                 </div>
             </div>
         </div>
-        <Outlet />
-    </div>
+    </>
+
 );
 
 const cardStyle = {
@@ -71,7 +56,7 @@ const cardStyle = {
 
 const containerStyle = {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
 };
 
