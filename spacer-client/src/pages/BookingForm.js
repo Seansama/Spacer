@@ -30,7 +30,7 @@ const BookingForm = ({spaceId}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission logic here
-        fetch(`http://127.0.0.1:3000/spaces/${spaceId}/bookings`, {
+        fetch(`https://spacer.onrender.com/spaces/${spaceId}/bookings`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
