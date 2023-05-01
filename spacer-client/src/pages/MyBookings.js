@@ -19,7 +19,7 @@ const MyBookings = () => {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${userToken}`,
             };
-            const response = await fetch("http://127.0.0.1:3000/bookings", {
+            const response = await fetch("https://spacer.onrender.com/bookings", {
                 headers: headers,
             });
             const data = await response.json();
@@ -31,7 +31,7 @@ const MyBookings = () => {
 
     const handleDelete = async (id) => {
         const userToken = localStorage.getItem("userToken");
-        const response = await fetch(`http://127.0.0.1:3000/delete_booking`, {
+        const response = await fetch(`https://spacer.onrender.com/delete_booking`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -48,13 +48,13 @@ const MyBookings = () => {
 
     const handleEdit = async (id, arrival, departure, status) => {
         const userToken = localStorage.getItem("userToken");
-        const response = await fetch(`http://127.0.0.1:3000/update_booking`, {
+        const response = await fetch(`https://spacer.onrender.com/update_booking`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${userToken}`,
             },
-            body: JSON.stringify({ arrival, departure, status }),
+            body: JSON.stringify({status}),
         });
         if (response.ok) {
             setbookings(
@@ -123,17 +123,10 @@ const MyBookings = () => {
                                 {booking.departure}
                             </td>
                             <td style={{ padding: "10px" }}>
-                                <button
-                                    onClick={() =>
-
-                                        handleEdit(
-                                            booking.status
-                                        )
-                                    }
-                                    style={{backgroundColor: "#75A2A5", color: "black", padding: "10px", borderRadius: "12px", marginRight: "10px", opacity: '80%'}}
-                                >
-                                    Edit
-                                </button>
+                                <button style={{ backgroundColor: "#75A2A5", color: "black", padding: "10px", borderRadius: "10px", opacity: "80%"}} onClick={() => {
+                                    const newStatus = prompt("Change your booking status(strictly 'Check out' or 'Check in'):");
+                                    handleEdit(booking.id, newStatus);
+                                }}>Edit</button>
                                 <button onClick={() => handleDelete(booking.id)}
                                         style={{ backgroundColor: "#75A2A5", color: "black", padding: "10px", borderRadius: "10px", opacity: '80%' }}
                                 >
