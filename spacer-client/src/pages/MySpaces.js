@@ -19,7 +19,7 @@ const MySpaces = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${adminToken}`
             };
-            const response = await fetch("http://127.0.0.1:3000/show_spaces", {
+            const response = await fetch("https://spacer.onrender.com/show_spaces", {
                 headers: headers
             });
             const data = await response.json();
@@ -31,7 +31,7 @@ const MySpaces = () => {
 
     const handleDelete = async (id) => {
         const adminToken = localStorage.getItem('adminToken')
-        const response = await fetch(`http://127.0.0.1:3000/delete_space`, {
+        const response = await fetch(`https://spacer.onrender.com/delete_space`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const MySpaces = () => {
 
     const handleEdit = async (id, description) => {
         const adminToken = localStorage.getItem('adminToken')
-        const response = await fetch(`http://127.0.0.1:3000/update_space`, {
+        const response = await fetch(`https://spacer.onrender.com/update_space`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

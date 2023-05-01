@@ -11,7 +11,7 @@ const Navbar = ({ title, link1, label1, link2, label2, link3, label3, link4, lab
         });
     };
     return (
-        <nav style={{ backgroundColor: 'black', position: 'sticky', top: 0, opacity: "90%" }}>
+        <nav style={{ backgroundColor: 'black', position: 'sticky', top: 0, opacity: "85%" }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ color: '#75A2A5', marginLeft: '24px', fontSize: 24 }}>{title}</span>
             </div>
