@@ -32,7 +32,7 @@ const Home = () => {
                     objectFit: "cover",
                 }}
                 alt=""
-                src="/rectangle-1@2x.png"
+                src="/backgroundImage.png"
             />
             <div
                 style={{

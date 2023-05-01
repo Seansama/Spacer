@@ -15,7 +15,7 @@ const ClientSignup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://127.0.0.1:3000/users", {
+            const response = await fetch("https://spacer.onrender.com/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

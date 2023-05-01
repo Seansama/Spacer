@@ -20,7 +20,7 @@ const SpacesView = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:3000/spaces", {
+                const response = await fetch("https://spacer.onrender.com/spaces", {
                     headers: {
                         "Content-Type": "application/json",
                         'Authorization': `Bearer ${userToken}`

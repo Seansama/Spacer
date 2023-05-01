@@ -14,7 +14,7 @@ const AdminLogin = () => {
     const label2 = 'Change Role'
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("http://127.0.0.1:3000/admin_login", {
+        const response = await fetch("https://spacer.onrender.com/admin_login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
